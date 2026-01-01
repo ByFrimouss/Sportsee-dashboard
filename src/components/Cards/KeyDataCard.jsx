@@ -1,8 +1,8 @@
-function KeyDataCard({ label }) {
+function KeyDataCard({ label, value }) {
   return (
     <div>
+      <p>{value}</p>
       <p>{label}</p>
-      <p>Valeur</p>
     </div>
   );
 }
