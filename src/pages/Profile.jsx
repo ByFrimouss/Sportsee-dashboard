@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { mockUser } from "../data/MockData";
+// import { mockUser } from "../data/MockData";
+import { getUser } from "../services/userService";
 import UserModel from "../models/UserModel";
 import ProfileHeader from "../components/ProfileHeader";
-// import ActivityChart from "../components/Charts/ActivityChart";
-// import AverageSessionsChart from "../components/Charts/AverageSessionsChart";
-// import PerformanceRadar from "../components/Charts/PerformanceRadar";
-// import ScoreChart from "../components/Charts/ScoreChart";
 import KeyDataCard from "../components/Cards/KeyDataCard";
+import ActivityChart from "../components/Charts/ActivityChart";
 
 function Profile() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const formattedUser = new UserModel(mockUser);
-    setUser(formattedUser);
-  }, []);
+    async function fetchUser() {
+      const userData = await getUser(12);
+      const formattedUser = new UserModel(userData);
+      setUser(formattedUser);
+    }
 
+    fetchUser();
+  }, []);
   if (!user) return null;
 
   return (
@@ -23,6 +25,7 @@ function Profile() {
       <ProfileHeader firstName={user.firstName} />
 
       <section>
+        <ActivityChart />
         <aside>
           <KeyDataCard label="Calories" value={user.keyData.calories} />
           <KeyDataCard label="Protéines" value={user.keyData.proteins} />
