@@ -1,0 +1,18 @@
+.profile-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+
+    .profile-header__name {
+      color: #e60000;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #000;
+  }
+}

@@ -1,0 +1,22 @@
+.average-sessions {
+  background-color: #ff0000;
+  border-radius: 5px;
+  padding: 1rem;
+  width: 100%;
+  height: 260px;
+  position: relative;
+
+  h2 {
+    color: #ffffff;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+
+  &__tooltip {
+    background-color: #ffffff;
+    color: #000;
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+}
