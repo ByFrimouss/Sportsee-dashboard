@@ -1,18 +1,20 @@
-export const mockUser = {
-  id: 12,
-  userInfos: {
-    firstName: "Karl",
-    lastName: "Dovineau",
-    age: 31,
+export const mockUser = [
+  {
+    id: 12,
+    userInfos: {
+      firstName: "Karl",
+      lastName: "Dovineau",
+      age: 31,
+    },
+    todayScore: 0.12,
+    keyData: {
+      calorieCount: 1930,
+      proteinCount: 155,
+      carbohydrateCount: 290,
+      lipidCount: 50,
+    },
   },
-  todayScore: 0.12,
-  keyData: {
-    calorieCount: 1930,
-    proteinCount: 155,
-    carbohydrateCount: 290,
-    lipidCount: 50,
-  },
-};
+];
 
 export const mockActivity = [
   { day: "2023-12-01", kilogram: 80, calories: 240 },

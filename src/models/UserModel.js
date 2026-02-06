@@ -1,3 +1,9 @@
+/**
+ * UserModel
+ * Permet de standardiser les données utilisateur venant de l'API
+ * afin de fournir une structure unique aux composants React.
+ */
+
 class UserModel {
   constructor(data) {
     this.id = data.id;
@@ -5,7 +11,7 @@ class UserModel {
     this.lastName = data.userInfos.lastName;
     this.age = data.userInfos.age;
 
-    // gestion des deux cas possibles API
+    // L'API peut renvoyer todayScore ou score selon l'utilisateur
     this.score = data.todayScore ?? data.score;
 
     this.keyData = {

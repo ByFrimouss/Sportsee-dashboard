@@ -1,11 +1,9 @@
 .key-data-card {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
-  padding: 1.5rem;
-  margin: 2.2rem;
+  gap: 2rem;
+  padding: 1rem;
   border-radius: 5px;
-  background-color: #e2e2e2;
 
   &__icon {
     width: 60px;
@@ -16,8 +14,8 @@
     justify-content: center;
 
     img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
     }
   }
 
@@ -25,6 +23,7 @@
     font-size: 1.2rem;
     font-weight: 700;
     color: #282d30;
+    white-space: nowrap;
   }
 
   &__label {
@@ -32,13 +31,17 @@
     color: #74798c;
   }
 
-  /* Variantes couleurs */
+  /* Variantes couleurs pour icônes */
   &--calories .key-data-card__icon {
     background-color: rgba(255, 0, 0, 0.1);
   }
 
   &--proteins .key-data-card__icon {
     background-color: rgba(74, 184, 255, 0.1);
+    img {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   &--carbs .key-data-card__icon {
@@ -47,5 +50,12 @@
 
   &--lipids .key-data-card__icon {
     background-color: rgba(253, 81, 129, 0.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .key-data-card {
+    gap: 1rem;
+    padding: 0.8rem;
   }
 }

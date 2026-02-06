@@ -1,34 +1,52 @@
 .score-chart {
   position: relative;
-  background-color: #ffffff;
+  background-color: #fbfbfb;
   border-radius: 5px;
   width: 100%;
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 240px;
+  padding: 0 1rem;
+}
 
-  h2 {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    font-size: 0.9rem;
+/* Titre en haut à gauche */
+.score-chart__title {
+  position: absolute;
+  top: 0.4rem;
+  left: 2rem;
+  font-size: 15px;
+  color: #20253a;
+}
+
+.score-chart__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  span {
+    font-size: 26px;
+    font-weight: 700;
   }
 
-  &__text {
-    position: absolute;
-    text-align: center;
+  p {
+    color: #74798c;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+}
 
-    span {
-      font-size: 1.6rem;
-      font-weight: bold;
-    }
+@media (max-width: 1024px) {
+  .performance-radar {
+    height: 220px;
+  }
+}
 
-    p {
-      font-size: 0.8rem;
-      color: #74798c;
-      margin-top: 0.2rem;
-      line-height: 1.2;
-    }
+@media (max-width: 768px) {
+  .score-chart {
+    min-height: 200px;
+  }
+
+  .score-chart__text span {
+    font-size: 22px;
   }
 }
