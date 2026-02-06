@@ -6,81 +6,71 @@ import {
   mockPerformance,
 } from "../data/MockData";
 
-// Si REACT_APP_USE_MOCK=true dans .env, on utilise les données mock
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 const API_BASE_URL = "http://localhost:3000";
 
+// ✅ WHITELIST des endpoints autorisés
+const ALLOWED_ENDPOINTS = [
+  "/user/:id",
+  "/user/:id/activity",
+  "/user/:id/average-sessions",
+  "/user/:id/performance",
+];
+
+/**
+ * Valide et construit l'endpoint de manière sécurisée
+ * @param {string} pattern - Pattern de l'endpoint (ex: "/user/:id")
+ * @param {number} id - ID de l'utilisateur
+ * @returns {string} - Endpoint validé
+ */
+function buildSecureEndpoint(pattern, id) {
+  // Valide que l'id est bien un nombre
+  const userId = parseInt(id, 10);
+  if (isNaN(userId) || userId <= 0) {
+    throw new Error("ID utilisateur invalide");
+  }
+
+  // Vérifie que le pattern est dans la whitelist
+  if (!ALLOWED_ENDPOINTS.includes(pattern)) {
+    throw new Error("Endpoint non autorisé");
+  }
+
+  // Remplace :id par l'id validé
+  return pattern.replace(":id", userId);
+}
+
 /**
  * Fonction centrale pour récupérer les données de l'API ou des mocks
- * @param {string} endpoint - L'endpoint de l'API (ex: "/user/12")
- * @param {any} mockData - Les données à retourner si on est en mode mock
- * @returns {Promise<any>} - Retourne les données de l'utilisateur ou du mock
- *
- *
- * Cette fonction évite de répéter la logique mock/API dans chaque service.
- * Elle gère aussi les erreurs et loggue un message clair si l'API échoue.
  */
-async function fetchData(endpoint, mockData) {
+async function fetchData(endpointPattern, id, mockData) {
   if (USE_MOCK) return mockData;
 
   try {
+    const endpoint = buildSecureEndpoint(endpointPattern, id);
     const response = await axios.get(`${API_BASE_URL}${endpoint}`);
     return response.data.data;
   } catch (error) {
-    console.error(`Erreur API sur ${endpoint}:`, error);
+    console.error(`Erreur API sur ${endpointPattern}:`, error);
     throw new Error("Impossible de récupérer les données utilisateur");
   }
 }
 
-/**
- * Récupère les informations générales de l'utilisateur
- * @param {number} id - ID de l'utilisateur
- * @returns {Promise<Object>} - Objet contenant id, userInfos et todayScore
- *
- *
- * getUser utilise fetchData pour centraliser la logique mock/API.
- */
 export async function getUser(id) {
-  const mockData = mockUser.find((u) => u.id === id);
-  return fetchData(`/user/${id}`, mockData);
+  const mockData = mockUser.find((u) => u.id === parseInt(id, 10));
+  return fetchData("/user/:id", id, mockData);
 }
 
-/**
- * Récupère l'activité quotidienne de l'utilisateur
- * @param {number} id - ID de l'utilisateur
- * @returns {Promise<Array>} - Tableau de sessions [{day, kilogram, calories}]
- *
- *
- * getUserActivity récupère les données pour les graphiques journaliers.
- */
 export async function getUserActivity(id) {
   const mockData = mockActivity;
-  return fetchData(`/user/${id}/activity`, mockData.sessions || mockData);
+  return fetchData("/user/:id/activity", id, mockData.sessions || mockData);
 }
 
-/**
- * Récupère la moyenne des sessions par jour
- * @param {number} id - ID de l'utilisateur
- * @returns {Promise<Array>} - Tableau de sessions moyennes [{day, sessionLength}]
- *
- *
- * getAverageSessions prépare les données pour le chart "AverageSessions".
- */
 export async function getAverageSessions(id) {
   const mockData = mockAverageSessions;
-  return fetchData(`/user/${id}/average-sessions`, mockData);
+  return fetchData("/user/:id/average-sessions", id, mockData);
 }
 
-/**
- * Récupère la performance de l'utilisateur pour le radar chart
- * @param {number} id - ID de l'utilisateur
- * @returns {Promise<Object>} - Objet performance {data: [...], kind: {...}}
- *
- *
- * getUserPerformance est utilisé pour le radar chart "Performance".
- *
- */
 export async function getUserPerformance(id) {
   const mockData = mockPerformance;
-  return fetchData(`/user/${id}/performance`, mockData);
+  return fetchData("/user/:id/performance", id, mockData);
 }
