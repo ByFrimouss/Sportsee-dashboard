@@ -9,7 +9,7 @@ import {
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 const API_BASE_URL = "http://localhost:3000";
 
-// ✅ WHITELIST des endpoints autorisés
+// WHITELIST des endpoints autorisés
 const ALLOWED_ENDPOINTS = [
   "/user/:id",
   "/user/:id/activity",
